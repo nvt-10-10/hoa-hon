@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,17 +10,21 @@
   <!-- Google Fonts - Inter & Space Grotesk -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap"
+    rel="stylesheet">
 
   <style>
     body {
       font-family: 'Inter', sans-serif;
     }
+
     .font-mono-num {
       font-family: 'Space Grotesk', monospace;
       font-feature-settings: "tnum";
       font-variant-numeric: tabular-nums;
     }
+
     /* Hiệu ứng viền lượn sóng/răng cưa đáy bill */
     .receipt-bottom-teeth {
       background: radial-gradient(circle, transparent 65%, #ffffff 70%);
@@ -28,14 +33,17 @@
       background-repeat: repeat-x;
       height: 10px;
     }
+
     @media print {
       body {
         background: #ffffff !important;
         padding: 0 !important;
       }
+
       .no-print {
         display: none !important;
       }
+
       .print-box {
         box-shadow: none !important;
         border: 1px solid #e2e8f0 !important;
@@ -45,29 +53,37 @@
     }
   </style>
 </head>
-<body class="min-h-screen bg-slate-950/5 flex flex-col items-center justify-center p-4 sm:p-8 selection:bg-indigo-500 selection:text-white">
+
+<body
+  class="min-h-screen bg-slate-950/5 flex flex-col items-center justify-center p-4 sm:p-8 selection:bg-indigo-500 selection:text-white">
 
   <!-- Background Gradient Effect -->
-  <div class="fixed inset-0 -z-10 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.15),rgba(255,255,255,0))]"></div>
+  <div
+    class="fixed inset-0 -z-10 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.15),rgba(255,255,255,0))]">
+  </div>
 
-  <!-- Container Hóa đơn -->
-  <main id="app" class="w-full max-w-[420px] bg-white rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.08)] border border-slate-100/80 overflow-hidden print-box transition-all duration-500 ease-out transform scale-95 opacity-0">
-    
+  <main id="app"
+    class="hidden w-full max-w-[420px] bg-white rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.08)] border border-slate-100/80 overflow-hidden print-box">
+
     <!-- Top Header -->
-    <header class="relative px-6 pt-8 pb-6 text-center bg-gradient-to-b from-slate-50/80 to-transparent border-b border-dashed border-slate-200/80">
-      
+    <header
+      class="relative px-6 pt-8 pb-6 text-center bg-gradient-to-b from-slate-50/80 to-transparent border-b border-dashed border-slate-200/80">
+
       <!-- Live Tag -->
-      <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200/60 text-[11px] font-semibold text-emerald-700 tracking-wide mb-3">
+      <div
+        class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200/60 text-[11px] font-semibold text-emerald-700 tracking-wide mb-3">
         <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
         HÓA ĐƠN ĐIỆN TỬ
       </div>
 
-      <h1 class="text-xl font-bold tracking-tight text-slate-900 line-clamp-1" id="storeName">Cửa Hàng Cafe Tí Nị</h1>
+      <h1 class="text-xl font-bold tracking-tight text-slate-900 line-clamp-1" id="storeName">Cửa Hàng Bán Lẻ</h1>
       <p class="text-slate-400 text-xs mt-1">Cảm ơn quý khách đã tin tưởng mua hàng</p>
 
       <!-- Hai vết khoét tròn mô phỏng cuống vé/hóa đơn -->
-      <div class="absolute -bottom-3 -left-3 w-6 h-6 rounded-full bg-[#f8fafc] border-r border-slate-200/60 no-print"></div>
-      <div class="absolute -bottom-3 -right-3 w-6 h-6 rounded-full bg-[#f8fafc] border-l border-slate-200/60 no-print"></div>
+      <div class="absolute -bottom-3 -left-3 w-6 h-6 rounded-full bg-[#f8fafc] border-r border-slate-200/60 no-print">
+      </div>
+      <div class="absolute -bottom-3 -right-3 w-6 h-6 rounded-full bg-[#f8fafc] border-l border-slate-200/60 no-print">
+      </div>
     </header>
 
     <!-- Body Hóa đơn -->
@@ -88,7 +104,8 @@
       <!-- Trạng thái thanh toán -->
       <div class="flex items-center justify-between py-1">
         <span class="text-xs font-medium text-slate-500">Trạng thái giao dịch</span>
-        <span id="statusBadge" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold tracking-wide">
+        <span id="statusBadge"
+          class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold tracking-wide">
           ---
         </span>
       </div>
@@ -105,12 +122,13 @@
       </div>
 
       <!-- Tổng tiền thanh toán -->
-      <div class="bg-gradient-to-br from-indigo-50/70 via-blue-50/40 to-slate-50/50 p-4 rounded-2xl border border-indigo-100/60">
+      <div
+        class="bg-gradient-to-br from-indigo-50/70 via-blue-50/40 to-slate-50/50 p-4 rounded-2xl border border-indigo-100/60">
         <div class="flex justify-between items-baseline">
           <span class="text-xs font-bold text-slate-600 uppercase tracking-wider">Tổng thanh toán</span>
           <span class="text-2xl font-extrabold text-indigo-600 font-mono-num tracking-tight" id="totalAmount">0đ</span>
         </div>
-        
+
         <!-- Ghi chú nếu có -->
         <div class="mt-3 pt-3 border-t border-indigo-100/60 text-xs text-slate-500 hidden" id="orderNoteContainer">
           <span class="font-medium text-slate-700">Ghi chú:</span> <span id="orderNote" class="italic"></span>
@@ -118,10 +136,12 @@
       </div>
 
       <!-- Khung QR MBBank -->
-      <div id="paymentSection" class="hidden flex flex-col items-center p-5 rounded-2xl bg-slate-50 border border-slate-200/80 text-center space-y-3.5 no-print">
+      <div id="paymentSection"
+        class="hidden flex flex-col items-center p-5 rounded-2xl bg-slate-50 border border-slate-200/80 text-center space-y-3.5 no-print">
         <div class="flex items-center gap-1.5">
           <svg class="w-4 h-4 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM14.625 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5z" />
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM14.625 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5z" />
           </svg>
           <span class="text-xs font-bold text-slate-700 uppercase tracking-wider">Quét mã VietQR MBBank</span>
         </div>
@@ -138,9 +158,11 @@
 
       <!-- Nút in hóa đơn -->
       <div class="pt-2 no-print">
-        <button onclick="window.print()" class="w-full bg-slate-900 hover:bg-slate-800 active:scale-[0.98] text-white text-sm font-semibold py-3 px-4 rounded-xl transition duration-150 flex items-center justify-center gap-2 shadow-sm">
+        <button onclick="window.print()"
+          class="w-full bg-slate-900 hover:bg-slate-800 active:scale-[0.98] text-white text-sm font-semibold py-3 px-4 rounded-xl transition duration-150 flex items-center justify-center gap-2 shadow-sm">
           <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229-2.517m0 0a17.963 17.963 0 00-2.277-5.205M17.66 18H6.34m0 0l-.229-2.517m0 0a17.963 17.963 0 012.277-5.205m0 0a17.961 17.961 0 014.014-3.07l.019-.012a5.074 5.074 0 015.342 0l.019.012a17.961 17.961 0 014.014 3.07zM12 18v-4.5m0 0l-1.25 1.25M12 13.5l1.25 1.25" />
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229-2.517m0 0a17.963 17.963 0 00-2.277-5.205M17.66 18H6.34m0 0l-.229-2.517m0 0a17.963 17.963 0 012.277-5.205m0 0a17.961 17.961 0 014.014-3.07l.019-.012a5.074 5.074 0 015.342 0l.019.012a17.961 17.961 0 014.014 3.07zM12 18v-4.5m0 0l-1.25 1.25M12 13.5l1.25 1.25" />
           </svg>
           <span>In / Lưu hóa đơn</span>
         </button>
@@ -150,15 +172,19 @@
   </main>
 
   <!-- State lỗi / Không tìm thấy đơn hàng -->
-  <div id="errorState" class="hidden w-full max-w-sm bg-white rounded-3xl p-8 shadow-xl border border-slate-100 text-center space-y-4">
-    <div class="mx-auto w-14 h-14 bg-rose-50 border border-rose-100 rounded-full flex items-center justify-center text-rose-500">
+  <div id="errorState"
+    class="hidden w-full max-w-sm bg-white rounded-3xl p-8 shadow-xl border border-slate-100 text-center space-y-4">
+    <div
+      class="mx-auto w-14 h-14 bg-rose-50 border border-rose-100 rounded-full flex items-center justify-center text-rose-500">
       <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
       </svg>
     </div>
     <div>
       <h2 class="text-base font-bold text-slate-800">Không tìm thấy dữ liệu</h2>
-      <p class="text-slate-400 text-xs mt-1 leading-relaxed">Đường dẫn hóa đơn không hợp lệ hoặc dữ liệu nén đã bị chỉnh sửa.</p>
+      <p class="text-slate-400 text-xs mt-1 leading-relaxed">Đường dẫn hóa đơn không hợp lệ hoặc dữ liệu nén đã bị chỉnh
+        sửa.</p>
     </div>
   </div>
 
@@ -166,7 +192,7 @@
     const urlParams = new URLSearchParams(window.location.search);
     const customAlphabet = urlParams.get('c');
     const B64_CHARS = customAlphabet ? decodeURIComponent(customAlphabet) : 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
-    
+
     function decodeBase64(base64) {
       let standardB64 = base64.replace(/-/g, '+').replace(/_/g, '/');
       const padLength = (4 - (standardB64.length % 4)) % 4;
@@ -207,7 +233,7 @@
       }
     }
 
-    window.onload = function() {
+    window.onload = function () {
       const urlParams = new URLSearchParams(window.location.search);
       const dataHash = urlParams.get('d');
 
@@ -215,6 +241,7 @@
       const errorEl = document.getElementById('errorState');
 
       if (!dataHash) {
+        appEl.classList.add('hidden');
         errorEl.classList.remove('hidden');
         return;
       }
@@ -269,26 +296,32 @@
         if (note && note.trim() !== '') {
           document.getElementById('orderNoteContainer').classList.remove('hidden');
           document.getElementById('orderNote').innerText = note;
+        } else {
+          document.getElementById('orderNoteContainer').classList.add('hidden');
         }
 
         // VietQR
         if (mbAccountNumber) {
           document.getElementById('paymentSection').classList.remove('hidden');
           document.getElementById('bankInfo').innerText = `STK: ${mbAccountNumber} • MBBank • ${mbAccountName}`;
-          
+
           const vietQrUrl = `https://img.vietqr.io/image/MB-${mbAccountNumber}-compact2.png?amount=${totalAmount}&addInfo=${orderCode}&accountName=${encodeURIComponent(mbAccountName)}`;
           document.getElementById('vietQrImg').src = vietQrUrl;
+        } else {
+          document.getElementById('paymentSection').classList.add('hidden');
         }
 
-        // Animation hiển thị
-        appEl.classList.remove('opacity-0', 'scale-95');
-        appEl.classList.add('opacity-100', 'scale-100');
+        // Hiển thị hóa đơn, ẩn báo lỗi
+        errorEl.classList.add('hidden');
+        appEl.classList.remove('hidden');
 
       } catch (err) {
         console.error(err);
+        appEl.classList.add('hidden');
         errorEl.classList.remove('hidden');
       }
     };
   </script>
 </body>
+
 </html>
