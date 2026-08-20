@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tra cứu Hóa đơn Điện tử</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts - Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f3f4f6;
+    }
+    @media print {
+      body {
+        background-color: #ffffff;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .print-box {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4 sm:p-6">
+
+  <!-- Container chính -->
+  <div id="app" class="w-full max-w-md bg-white rounded-3xl shadow-xl overflow-hidden print-box transition-all duration-300 transform scale-95 opacity-0">
+    <!-- Header màu xanh dương chuyển sắc hiện đại -->
+    <div class="bg-gradient-to-r from-blue-600 to-indigo-700 px-6 py-8 text-white text-center relative no-print">
+      <div class="absolute top-4 left-4 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold tracking-wider">
+        ONLINE
+      </div>
+      <h1 class="text-2xl font-bold tracking-tight uppercase" id="storeName">Cửa Hàng Cafe Tí Nị</h1>
+      <p class="text-blue-100 text-sm mt-1">Hóa đơn điện tử tra cứu trực tuyến</p>
+    </div>
+
+    <!-- Nội dung hóa đơn -->
+    <div class="p-6 space-y-6">
+      
+      <!-- Thông tin chung -->
+      <div class="flex justify-between items-start border-b border-gray-100 pb-4">
+        <div>
+          <span class="text-xs text-gray-400 block uppercase font-bold tracking-wider">Mã đơn hàng</span>
+          <span class="font-mono text-lg font-bold text-gray-800" id="orderCode">---</span>
+        </div>
+        <div class="text-right">
+          <span class="text-xs text-gray-400 block uppercase font-bold tracking-wider">Thời gian</span>
+          <span class="text-sm font-medium text-gray-600" id="createdAt">---</span>
+        </div>
+      </div>
+
+      <!-- Trạng thái -->
+      <div class="flex justify-between items-center bg-gray-50 px-4 py-3 rounded-2xl">
+        <span class="text-sm font-medium text-gray-500">Trạng thái thanh toán</span>
+        <span id="statusBadge" class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">---</span>
+      </div>
+
+      <!-- Chi tiết món ăn -->
+      <div>
+        <h3 class="text-xs text-gray-400 uppercase font-bold tracking-wider mb-3">Danh sách món ăn</h3>
+        <div class="divide-y divide-gray-100 border-t border-b border-gray-100 py-1" id="itemsList">
+          <!-- Sẽ được điền bằng Javascript -->
+        </div>
+      </div>
+
+      <!-- Tổng tiền -->
+      <div class="bg-blue-50/50 p-4 rounded-2xl border border-blue-100/50">
+        <div class="flex justify-between items-center">
+          <span class="text-sm font-bold text-blue-900">TỔNG CỘNG</span>
+          <span class="text-xl font-extrabold text-blue-600" id="totalAmount">0đ</span>
+        </div>
+        <!-- Ghi chú nếu có -->
+        <p class="text-xs text-gray-500 mt-2 hidden" id="orderNoteContainer">
+          <span class="font-semibold text-gray-600">Ghi chú:</span> <span id="orderNote"></span>
+        </p>
+      </div>
+
+      <!-- QR MBBank (Chỉ hiển thị nếu chờ thanh toán) -->
+      <div id="paymentSection" class="hidden flex flex-col items-center justify-center p-4 border border-dashed border-gray-200 rounded-2xl bg-gray-50/50 text-center space-y-3 no-print">
+        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider">Quét mã chuyển khoản MBBank</h4>
+        <div class="bg-white p-3 rounded-2xl shadow-sm border border-gray-100">
+          <img id="vietQrImg" src="" alt="Mã QR Chuyển khoản" class="w-48 h-48">
+        </div>
+        <div class="space-y-1">
+          <p class="text-sm font-bold text-gray-700" id="bankInfo">Số TK: ---</p>
+          <p class="text-xs text-gray-400">Nội dung chuyển khoản tự động trùng mã đơn</p>
+        </div>
+      </div>
+
+      <!-- Nút in hóa đơn -->
+      <div class="pt-2 no-print">
+        <button onclick="window.print()" class="w-full bg-gray-800 hover:bg-gray-900 text-white font-semibold py-3 px-4 rounded-2xl transition duration-200 flex items-center justify-center space-x-2 shadow-lg shadow-gray-200">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229-2.517m0 0a17.963 17.963 0 00-2.277-5.205M17.66 18H6.34m0 0l-.229-2.517m0 0a17.963 17.963 0 012.277-5.205m0 0a17.961 17.961 0 014.014-3.07l.019-.012a5.074 5.074 0 015.342 0l.019.012a17.961 17.961 0 014.014 3.07zM12 18v-4.5m0 0l-1.25 1.25M12 13.5l1.25 1.25" />
+          </svg>
+          <span>In hóa đơn này</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- State lỗi / không tìm thấy đơn hàng -->
+  <div id="errorState" class="hidden w-full max-w-sm bg-white rounded-3xl p-8 shadow-xl text-center space-y-4">
+    <div class="mx-auto w-16 h-16 bg-red-100 rounded-full flex items-center justify-center text-red-500">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-8 h-8">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+      </svg>
+    </div>
+    <div>
+      <h2 class="text-xl font-bold text-gray-800">Không tìm thấy dữ liệu</h2>
+      <p class="text-gray-500 text-sm mt-1">Đường dẫn hóa đơn không hợp lệ hoặc dữ liệu bị hỏng.</p>
+    </div>
+  </div>
+
+  <!-- Javascript giải mã và điền dữ liệu -->
+  <script>
+    // Đọc bảng ký tự động truyền từ App qua URL (tham số 'c'), nếu không có dùng bảng chuẩn
+    const urlParams = new URLSearchParams(window.location.search);
+    const customAlphabet = urlParams.get('c');
+    const B64_CHARS = customAlphabet ? decodeURIComponent(customAlphabet) : 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+    function decodeBase64(base64) {
+      let standardB64 = base64.replace(/-/g, '+').replace(/_/g, '/');
+      const padLength = (4 - (standardB64.length % 4)) % 4;
+      standardB64 += '='.repeat(padLength);
+
+      let buffer = '';
+      let i = 0;
+      const cleanB64 = standardB64.replace(/[^A-Za-z0-9+/]/g, '');
+
+      while (i < cleanB64.length) {
+        const enc1 = B64_CHARS.indexOf(cleanB64.charAt(i++));
+        const enc2 = B64_CHARS.indexOf(cleanB64.charAt(i++));
+        const enc3 = i < cleanB64.length ? B64_CHARS.indexOf(cleanB64.charAt(i++)) : 64;
+        const enc4 = i < cleanB64.length ? B64_CHARS.indexOf(cleanB64.charAt(i++)) : 64;
+
+        const chr1 = (enc1 << 2) | (enc2 >> 4);
+        const chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
+        const chr3 = ((enc3 & 3) << 6) | enc4;
+
+        buffer += String.fromCharCode(chr1);
+        if (enc3 !== 64) buffer += String.fromCharCode(chr2);
+        if (enc4 !== 64) buffer += String.fromCharCode(chr3);
+      }
+
+      return decodeURIComponent(escape(buffer));
+    }
+
+    function formatVND(amount) {
+      return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+    }
+
+    function formatDate(isoString) {
+      try {
+        const date = new Date(isoString);
+        return date.toLocaleDateString('vi-VN') + ' ' + date.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+      } catch (e) {
+        return isoString;
+      }
+    }
+
+    // Đọc tham số ?d= từ URL
+    window.onload = function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const dataHash = urlParams.get('d');
+
+      const appEl = document.getElementById('app');
+      const errorEl = document.getElementById('errorState');
+
+      if (!dataHash) {
+        errorEl.classList.remove('hidden');
+        return;
+      }
+
+      try {
+        // Giải mã JSON
+        const rawJson = decodeBase64(dataHash);
+        const data = JSON.parse(rawJson);
+
+        // Map cấu trúc dữ liệu nén
+        // data: { i: code, t: date, n: bank_name, a: bank_acc, s: total, m: items [[name, qty, price]], o: note }
+        const orderCode = data.i;
+        const createdAt = data.t;
+        const mbAccountName = data.n;
+        const mbAccountNumber = data.a;
+        const totalAmount = data.s;
+        const items = data.m;
+        const note = data.o;
+
+        // Điền giao diện
+        document.getElementById('storeName').innerText = mbAccountName || 'Cửa Hàng Bán Lẻ';
+        document.getElementById('orderCode').innerText = orderCode;
+        document.getElementById('createdAt').innerText = formatDate(createdAt);
+        document.getElementById('totalAmount').innerText = formatVND(totalAmount);
+
+        // Hiển thị trạng thái đơn (Mặc định offline là Chờ thanh toán, hoặc đã paid tùy theo thiết kế, ta hiển thị Chờ thanh toán nếu chưa thanh toán)
+        const statusBadge = document.getElementById('statusBadge');
+        // Đối với web viewer xem online, mặc định là Chờ thanh toán hoặc Đã thanh toán
+        statusBadge.innerText = 'Chờ thanh toán';
+        statusBadge.className += ' bg-amber-100 text-amber-800';
+
+        // Điền danh sách món
+        const itemsList = document.getElementById('itemsList');
+        itemsList.innerHTML = '';
+        items.forEach(item => {
+          const name = item[0];
+          const qty = item[1];
+          const price = item[2];
+          const subtotal = qty * price;
+
+          const itemRow = `
+            <div class="flex justify-between items-center py-3">
+              <div>
+                <span class="font-medium text-gray-800 text-sm block">${name}</span>
+                <span class="text-xs text-gray-400">${qty} x ${formatVND(price).replace(' ₫', '')}</span>
+              </div>
+              <span class="font-semibold text-gray-700 text-sm">${formatVND(subtotal)}</span>
+            </div>
+          `;
+          itemsList.innerHTML += itemRow;
+        });
+
+        // Xử lý ghi chú
+        if (note && note.trim() !== '') {
+          document.getElementById('orderNoteContainer').classList.remove('hidden');
+          document.getElementById('orderNote').innerText = note;
+        }
+
+        // Xử lý QR thanh toán ngân hàng
+        if (mbAccountNumber) {
+          document.getElementById('paymentSection').classList.remove('hidden');
+          document.getElementById('bankInfo').innerText = `STK: ${mbAccountNumber} - MBBank - ${mbAccountName}`;
+          
+          const vietQrUrl = `https://img.vietqr.io/image/MB-${mbAccountNumber}-compact2.png?amount=${totalAmount}&addInfo=${orderCode}&accountName=${encodeURIComponent(mbAccountName)}`;
+          document.getElementById('vietQrImg').src = vietQrUrl;
+        }
+
+        // Hiển thị ứng dụng với hiệu ứng transition đẹp mắt
+        appEl.classList.remove('opacity-0', 'scale-95');
+        appEl.classList.add('opacity-100', 'scale-100');
+
+      } catch (err) {
+        console.error(err);
+        errorEl.classList.remove('hidden');
+      }
+    };
+  </script>
+</body>
+</html>
